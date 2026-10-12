@@ -1,0 +1,8 @@
+# Executables
+*.exe
+
+# VS Code settings
+.vscode/
+
+# Build folders (at any depth)
+build/
