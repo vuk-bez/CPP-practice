@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 // Zadaci su iz fajla Prva grupa zadatak za vjezbu.pdf i to prva kategorija
@@ -216,7 +217,92 @@ void zad10() {
     cout << endl;
 }
 
+void zad11() {
+    int n;
+    cin >> n;
+    int otpornost = 0;
+
+    while (n/10 != 0) {
+        int suma = 0;
+        while(n != 0) {
+            int cifra = n % 10;
+            n /= 10;
+            suma += cifra;
+        }
+        n = suma;
+        otpornost++;
+    }
+
+    cout << otpornost << endl;
+}
+
+void zad12() {
+
+    int max = 0;
+    int n = 0;
+    int m = 0;
+
+    for (int i = 1; i < 100; i++) {
+        for(int j = 1; j < 100; j++) {
+            int suma = i*i + j*j;
+            if (abs(i*i + i*j + j*j) == 100 && suma > max) {
+                max = suma;
+                n = i; m = j;
+            }
+        }
+    }
+
+    cout << n << " i " << m << endl;
+}
+
+void zad13() {
+    int n;
+    cin >> n;
+
+    double suma = 0;
+    for (int i = 1; i <= n; i++) {
+        suma += pow(-1, i) / (double)i;
+    }
+
+    cout << suma << endl;
+}
+
+void zad14() {
+    double e;
+    cin >> e;
+
+    double suma = 0;
+    int imenilac = 1;
+    int i = 1;
+    while (true) {
+        double sabirak = imenilac / pow(i, 2);
+        if (sabirak < e) {
+            cout << suma << endl;
+            return;
+        }
+
+        suma += sabirak; 
+        i++;
+        imenilac += 2;
+    }
+}
+
+void zad15() {
+    double x;
+    int n;
+    cin >> x >> n;
+
+    double suma = 0;
+    int faktorijel = 1;
+    for (int i = 1; i <= n; i++) {
+        faktorijel *= i;
+        suma += (pow(-1, i-1)*sin(x-2)*sin(x-2))/(faktorijel);
+    }
+
+    cout << suma << endl;
+}
+
 int main() {
-    zad10();
+    zad15();
     return 0;
 }
