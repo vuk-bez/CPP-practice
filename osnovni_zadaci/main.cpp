@@ -293,7 +293,7 @@ void zad15() {
     cin >> x >> n;
 
     double suma = 0;
-    int faktorijel = 1;
+    double faktorijel = 1;
     for (int i = 1; i <= n; i++) {
         faktorijel *= i;
         suma += (pow(-1, i-1)*sin(x-2)*sin(x-2))/(faktorijel);
@@ -302,7 +302,211 @@ void zad15() {
     cout << suma << endl;
 }
 
+void zad16() {
+    double x;
+    int n;
+    cin >> x >> n;
+
+    double suma = 0;
+    double faktorijel = 1;
+    for(int i = 1; i <= n; i++) {
+        faktorijel *= i;
+        suma += (pow(-1,i)*pow(x+1,2*i+1))/faktorijel;
+    }
+
+    cout << suma << endl;
+}
+
+void zad17() {
+    int h, w;
+    cin >> h >> w;
+
+    for(int i = 0; i < h; i++) {
+        for(int j = 0; j < w; j++) {
+            if(i == 0 || j == 0 || i == h-1 || j == w-1) {
+                cout << "*";
+            } else {
+                cout << " ";
+            }
+        }
+        cout << endl;
+    }
+}
+
+// funkcija uz zadatak 18
+double rastojanje (double x1, double y1, double x2, double y2) {
+    return sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+}
+void zad18() {
+    double x1, x2, x3, y1, y2, y3;
+    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+
+    double a, b, c;
+    a = rastojanje(x1, y1, x2, y2);
+    b = rastojanje(x2, y2, x3, y3);
+    c = rastojanje(x1, y1, x3, y3);
+
+    if (a + b > c && a + c > b && b + c > a) {
+        cout << "Obrazuju trougao" << endl;
+    } else {
+        cout << "Ne obrazuju trougao" << endl;
+    }
+
+}
+
+// ista funkcija rastojanje koristi se i za ovaj zadatak
+void zad19() {
+    double x1, x2, x3, y1, y2, y3;
+    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+
+    double a, b, c;
+    a = rastojanje(x1, y1, x2, y2);
+    b = rastojanje(x2, y2, x3, y3);
+    c = rastojanje(x1, y1, x3, y3);
+
+    double s = (a + b + c)/2;
+    cout << sqrt(s*(s - a)*(s - b)*(s - c)) << endl;
+
+}
+
+// ista funkcija rastojanje koristi se i za ovaj zadatak
+void zad20() {
+    //???????????????????????????????????????????????????????
+}
+
+// u nastavku su iterativne verzije zadataka oznacene sa I, a rekurzivne sa R
+void zad21I() {
+    int n;
+    cin >> n;
+
+    int okrenut = 0;
+    while(n != 0) {
+        int cifra = n % 10;
+        n /= 10;
+
+        okrenut *= 10;
+        okrenut += cifra;
+    }
+
+    cout << okrenut << endl;
+}
+
+int zad21R(int n, int i) {
+    if (n == 0) {
+        return 0;
+    }
+
+    int cifra = n % 10;
+    
+    return cifra*pow(10, i-1) + zad21R(n/10, i-1);
+}
+
+void zad22I(){
+    int n;
+    cin >> n;
+
+    int m = 0;
+    while(n != 0) {
+        int cifra = n % 10;
+        n /= 10;
+
+        if(cifra % 2 != 0) {
+            m *= 10;
+            m += cifra;
+        }
+    }
+
+    int obrnut = 0;
+    while(m != 0) {
+        int cifra = m % 10;
+        m /= 10;
+
+        obrnut *= 10;
+        obrnut += cifra;
+    }
+
+    cout << obrnut << endl;
+}
+
+int zad22R(int n) {
+    if (n == 0) {
+        return 0;
+    }
+
+    int cifra = n % 10;
+    if (cifra % 2 != 0) {
+        return zad22R(n/10)*10 + cifra;
+    } else {
+        return zad22R(n/10);
+    }
+}
+
+void zad23I() {
+    double x, s, p;
+    cin >> x >> s >> p;
+
+    double godine = 0;
+    while (s > x) {
+        s = s - s*p/100;
+        godine ++;
+    }
+
+    cout << godine << endl;
+}
+
+double zad23R(double x, double s, double p) {
+    if (x > s) {
+        return 0;
+    }
+
+    return zad23R(x, s - s*p/100, p) + 1;
+}
+
+void zad24() {
+    int n;
+    cin >> n;
+
+    int kopija = n;
+    while (n != 0) {
+        int cifra = n % 10;
+        n /= 10;
+
+        if (kopija % cifra != 0) {
+            cout << "Ne vazi" << endl;
+            return;
+        }
+    }
+
+    cout << "Vazi" << endl;
+}
+
+void zad25() {
+    int n;
+    cin >> n;
+
+    while (n % 2 == 0) {
+        n /= 2;
+    }
+
+    while (n % 3 == 0) {
+        n /= 3;
+    }
+
+    while (n % 5 == 0) {
+        n /= 5;
+    }
+
+    if (n == 1) {
+        cout << "Jeste" << endl;
+    } else {
+        cout << "Nije" << endl;
+    }
+}
+
 int main() {
-    zad15();
+   
+    // # ZADATAK 2O NIJE URADJEN
+    
+    zad25();
     return 0;
 }
