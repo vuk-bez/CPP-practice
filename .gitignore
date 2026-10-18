@@ -6,3 +6,5 @@
 
 # Build folders (at any depth)
 build/
+
+.idea/
