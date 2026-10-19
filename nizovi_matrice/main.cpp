@@ -281,9 +281,97 @@ void zad35() {
     delete[] niz;
 }
 
+void zad36() {
+    int n, m;
+    cin >> n >> m;
+
+    int* prvi = new int[n]; // prvi veci ili jednak drugom
+    unosNiza(prvi, n);
+    int* drugi = new int[m];
+    unosNiza(drugi, m);
+
+    int*  zbir = new int[n+1];
+    int prenos = 0;
+    for(int i = m-1; i >= 0; i--) {
+        zbir[i + (n-m)+1] = (prvi[i+(n-m)]+drugi[i]+prenos) % 10;
+        prenos = (prvi[i+(n-m)]+drugi[i]+prenos) / 10;
+    }
+
+    for(int i = n-m-1; i >= 0; i--) {
+        zbir[i+1] = (prenos + prvi[i]) % 10;
+        prenos = (prvi[i] + prenos) / 10;
+    }
+    zbir[0] = prenos;
+
+    if(zbir[0] == 0) {
+        int* temp = new int[n];
+        for(int i = 0; i < n; i++) {
+            temp[i] = zbir[i+1];
+        }
+        ispisNiza(temp, n);
+    } else {
+        ispisNiza(zbir, n+1);
+    }
+
+    delete[] zbir;
+    cout << endl;
+
+    int* razlika = new int[n];
+    int pozajmica = 0;
+
+    for(int i = n - 1, j = m - 1; i >= 0; i--, j--) { // proba sa dva brojaca
+        int d = prvi[i] - pozajmica - (j >= 0 ? drugi[j] : 0); //ternari operator
+        if(d < 0) {
+            d += 10;
+            pozajmica = 1;
+        } else {
+            pozajmica = 0;
+        }
+        razlika[i] = d;
+    }
+
+    // preskoči vodeće nule, ali ostavi bar jednu cifru
+    int pocetak = 0;
+    while(pocetak < n - 1 && razlika[pocetak] == 0) pocetak++;
+
+    ispisNiza(razlika + pocetak, n - pocetak);
+
+    delete[] prvi;
+    delete[] drugi;
+    delete[] razlika;
+
+}
+
+void zad37() {
+    int n;
+    cin >> n ;
+
+    int* realniDio = new int[n];
+    unosNiza(realniDio, n);
+    int* imaginarniDio = new int[n];
+    unosNiza(imaginarniDio, n);
+
+    int realniDioP = realniDio[0];
+    int imaginarniDioP = imaginarniDio[0];
+
+    for(int i = 0; i < n - 1; i++) {
+        int temp = realniDioP; // da bih za racunanje imaginarnog koristio stari realni a ne novo izracunati
+        realniDioP = realniDioP*realniDio[i+1] - imaginarniDioP*imaginarniDio[i+1];
+        imaginarniDioP = realniDio[i+1]*imaginarniDioP + temp*imaginarniDio[i+1];
+    }
+
+    cout << realniDioP << " + " << imaginarniDioP << "i" << endl;
+    delete[] imaginarniDio;
+    delete[] realniDio;
+}
+
+void zad38() {
+    
+}
+
 int main() {
 
-    zad35();
+    zad37();
 
     return 0;
 }
