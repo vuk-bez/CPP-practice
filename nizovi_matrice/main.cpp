@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 // Zadaci su iz fajla Prva grupa zadatak za vjezbu.pdf i to druga kategorija
@@ -365,13 +366,60 @@ void zad37() {
     delete[] realniDio;
 }
 
+// pomocna funkcija za zadatke
+
+int rastojanje (int x1, int y1, int x2, int y2) {
+    return sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
+}
+
 void zad38() {
+    int n;
+    cin >> n;
+
+    int* X = new int[n];
+    int* Y = new int[n];
+    unosNiza(X, n);
+    unosNiza(Y, n);
+
+    double max = 0;
+    for(int i = 0; i < n; i++) {
+        for(int j = i + 1; j < n; j++) {
+            for(int k = j + 1; k < n; k++) {
+                double a = rastojanje(X[i], Y[i], X[j], Y[j]);
+                double b = rastojanje(X[j], Y[j], X[k], Y[k]);
+                double c = rastojanje(X[k], Y[k], X[i], Y[i]);
+
+                double s = (a+b+c)/2.0;
+
+                double povrsina = sqrt(s*(s-a)*(s-b)*(s-c));
+                if (povrsina > max) {
+                    max = povrsina;
+                }
+            }
+        }
+    }
+
+    cout << max << endl;
+    delete[] X;
+    delete[] Y;
+
+}
+
+void zad39() {
+    int n;
+    cin >> n;
+
+    int* X = new int[n];
+    int* Y = new int[n];
+    unosNiza(X, n);
+    unosNiza(Y, n);
+
     
 }
 
 int main() {
 
-    zad37();
+    zad38();
 
     return 0;
 }

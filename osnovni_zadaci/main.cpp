@@ -371,7 +371,63 @@ void zad19() {
 
 // ista funkcija rastojanje koristi se i za ovaj zadatak
 void zad20() {
-    //???????????????????????????????????????????????????????
+    double x1, x2, x3, y1, y2, y3;
+    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+
+    double duzine[3];
+    duzine[0] = rastojanje(0, 0, x1, y1);
+    duzine[1] = rastojanje(0, 0, x2, y2);
+    duzine[2] = rastojanje(0, 0, x3, y3);
+
+    int min = duzine[0];
+    int minI = 0;
+    for(int i = 1; i < 3; i++) {
+        if(duzine[i] < min) { min = duzine[i]; minI=i; }
+    }
+
+    switch(minI) {
+        case 0: {
+            cout << "(" << x1 << "," << y1 << ")" << " ";
+            double ugao2 = atan2(y2, x2);
+            double ugao3 = atan2(y3, x3);
+            if (ugao2 > ugao3) {
+                cout << "(" << x2 << "," << y2 << ")" << " ";
+                cout << "(" << x3 << "," << y3 << ")" << endl;
+            } else {
+                cout << "(" << x3 << "," << y3 << ")" << " ";
+                cout << "(" << x2 << "," << y2 << ")" << endl;
+            }
+            break;
+        }
+        case 1: {
+            cout << "(" << x2 << "," << y2 << ")" << " ";
+            double ugao1 = atan2(y1, x1);
+            double ugao3 = atan2(y3, x3);
+            if (ugao1 > ugao3) {
+                cout << "(" << x1 << "," << y1 << ")" << " ";
+                cout << "(" << x3 << "," << y3 << ")" << endl;
+            } else {
+                cout << "(" << x3 << "," << y3 << ")" << " ";
+                cout << "(" << x1 << "," << y1 << ")" << endl;
+            }
+            break;
+        }
+        case 2: {
+            cout << "(" << x3 << "," << y3 << ")" << " ";
+            double ugao1 = atan2(y1, x1);
+            double ugao2 = atan2(y2, x2);
+            if (ugao1 > ugao2) {
+                cout << "(" << x1 << "," << y1 << ")" << " ";
+                cout << "(" << x2 << "," << y2 << ")" << endl;
+            } else {
+                cout << "(" << x2 << "," << y2 << ")" << " ";
+                cout << "(" << x1 << "," << y1 << ")" << endl;
+            }
+            break;
+        }
+    }
+
+
 }
 
 // u nastavku su iterativne verzije zadataka oznacene sa I, a rekurzivne sa R
@@ -504,9 +560,7 @@ void zad25() {
 }
 
 int main() {
-   
-    // # ZADATAK 2O NIJE URADJEN
-    
-    zad25();
+
+    zad20();
     return 0;
 }
