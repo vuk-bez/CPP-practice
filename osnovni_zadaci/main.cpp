@@ -379,7 +379,7 @@ void zad20() {
     duzine[1] = rastojanje(0, 0, x2, y2);
     duzine[2] = rastojanje(0, 0, x3, y3);
 
-    int min = duzine[0];
+    double min = duzine[0];
     int minI = 0;
     for(int i = 1; i < 3; i++) {
         if(duzine[i] < min) { min = duzine[i]; minI=i; }
