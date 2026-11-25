@@ -797,7 +797,11 @@ void zad26() {
 bool validan(string &s) {
     int niz[4] = {0};
     for(int i = 0; i < s.size(); i++) {
-        niz[s[i]-65] = 1;
+        if(s[i] == 'A') niz[0] = 1;
+        if(s[i] == 'C') niz[1] = 1;
+        if(s[i] == 'T') niz[2] = 1;
+        if(s[i] == 'G') niz[3] = 1;
+
     }
 
     for(int i = 0; i < 4; i++) {
@@ -814,21 +818,226 @@ void zad28() {
     int k;
     cin >> s >> k;
 
-    for(int i = 4; i <= s.size(); i++) {
-        for(int j = 0; j < s.size() - i + 1; j++) {
-            int niz[4] = {0};
-            string substr;
-            substr = s.substr(j,i);
+    for(int j = 0; j < s.size() - k + 1; j++) {
+        string substr;
+        substr = s.substr(j,k);
 
-            if(validan(substr)) cout << substr << endl;
+        if(validan(substr)) cout << substr << endl;
+    }
+
+}
+ // zad 29. --- Napisati program koji sa standardnog ulaza učitava string genom koji se sastoji od 
+//              velikih slova ’A’, ’C’, ’G’, ’T’ (skraćenice za 4 nukleotidne baze adenin, citozin, guanin 
+//              i timin) i prirodan broj k. Vaš program treba da pronađe i odštampa sve podstringove 
+//              stringa genom dužine k koji se u njemu javljaju više od jednom. Ne štampati duplikate.
+
+
+void zad29() {
+    string s;
+    int k;
+    cin >> s >> k;
+
+    string rijeseni[100];
+    for(int i = 0; i < s.size() - k + 1; i++) {
+        string substring;
+        substring = s.substr(i,k);
+
+        for(int j=i; j < s.size() - k + 1; j++) {
+            string substring2;
+            substring2 = s.substr(j, k);
+
+            if(substring == substring2){
+                cout << substring << endl;
+            }
+        }
+    }
+
+}
+
+// zad 30. --- Napisati program koji za učitani string nalazi i štampa najduži podstring datog stringa 
+//             koji je palindrom
+
+bool jePalindrom(string s) {
+    for(int i = 0; i < s.size()/2; i++) {
+        if(s[i] != s[s.size()-1-i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+void zad30() {
+    string s;
+    cin >> s;
+    
+    for(int i = s.size(); i >= 1; i--) {
+        for(int j = 0; j < s.size()-i+1; j++) {
+            string substr = s.substr(j, i);
+            if(jePalindrom(substr)) {
+                cout << substr << endl;
+                return;
+            }
+        }
+    }
+
+    cout << "Nema palindroma" << endl;
+}
+
+// zad 31. --- Napisati funkciju bool anagram(string str1, string str2) kojom se provjerava da li su 
+//             dva data stringa anagrami. Stringovi su anagrami ukoliko se jedan string može dobiti 
+//             premještanjem  slova  drugog  stringa.  
+
+void zad31() {
+    string s1;
+    string s2;
+
+    cin >> s1 >> s2;
+
+    int pojavljivanje1[26] = {0};
+    int pojavljivanje2[26] = {0};
+
+    for(int i = 0; i < s1.size(); i++) {
+        pojavljivanje1[s1[i]-97]++; 
+    }
+
+    for(int i = 0; i < s2.size(); i++) {
+        pojavljivanje2[s2[i]-97]++; 
+    }
+
+    for(int i = 0; i < 26; i++) {
+        if(pojavljivanje1[i] != pojavljivanje2[i]) {
+            cout << "Nije anagram" << endl;
+            return;
+        }
+    }
+
+    cout << "Jeste anagram" << endl;
+
+}
+
+// zad 33. ---  Napisati program koji sa  standardnog  ulaza učitava  dva  stringa A i B koji sadrže 
+//              isključivo mala slova engleske abecede. Program treba da pronađe i odštampa slova 
+//              po kojima se stringovi A i B razlikuju (da jedan sadrži određeno slovo a drugi ne). 
+//              Svako ponavljanje određenog slova, posmatra se odvojeno.
+
+void zad33() {
+    string s1;
+    string s2;
+
+    cin >> s1 >> s2;
+
+    int pojavljivanje1[26] = {0};
+    int pojavljivanje2[26] = {0};
+
+    for(int i = 0; i < s1.size(); i++) {
+        pojavljivanje1[s1[i]-97]++;
+    }
+
+    for(int i = 0; i < s2.size(); i++) {
+        pojavljivanje2[s2[i]-97]++;
+    }
+
+    for(int i = 0; i < 26; i++) {
+        int brojac = abs(pojavljivanje1[i] - pojavljivanje2[i]);
+        for(int j = 0; j < brojac; j++) {
+            cout << (char)(i+97);
         }
     }
 }
 
+// zad 34. --- Napisati program koji sa standardnog ulaza učitava dva stringa A i B i provjerava da 
+//             li  se  string  A  može  sastaviti  korišćenjem  isključivo  slova  iz  stringa  B. 
+
+void zad34() {
+    string s1;
+    string s2;
+
+    cin >> s1 >> s2;
+    
+    int skup1[26] = {0};
+    int skup2[26] = {0};
+
+    for(int i = 0; i < s1.size(); i++) {
+        skup1[s1[i]-97] ++;
+    }
+
+    for(int i = 0; i < s2.size(); i++) {
+        skup2[s2[i]-97] ++;
+    }
+
+    for(int i = 0; i < 26; i++) {
+        if(skup1[i] != 0) {
+            if (skup1[i] != skup2[i]) {
+                cout << "Ne moze" << endl;
+                return;
+            }
+        }
+    }
+
+    cout << "Moze" << endl;
+}
+
+// zad 35. ---  IP adresa je jedinstvena oznaka hosta u računarskoj mreži. IP adresa se sastoji od 
+//              četiri prirodna broja od 0 do 255 (bez vodećih nula) odvojena tačkama. Napisati 
+//              program koji sa standardnog ulaza učitava string i provjerava da li taj string 
+//              predstavlja validnu IP adresu.
+
+bool segmentJeValidan(string s) {
+    for(int i = 0; i < s.size(); i++) {
+        if (!(s[i] >= '0' && s[i] <= '9')) {
+            return false;
+        }
+    }
+
+    if(s[0] == '0' && s.size() > 1) return false;
+
+    int opseg = stoi(s);
+    if(!(opseg >= 0 && opseg <=255)) return false;
+
+    return true;
+}
+
+void zad35() {
+    string s;
+    cin >> s;
+
+    int brojTacaka = 0;
+    for(int i = 0; i < s.size(); i++) {
+        if(s[i] == '.') brojTacaka++;
+    }
+
+    if (brojTacaka != 3) {
+        cout << "Nije validna" << endl;
+        return;
+    }
+
+    int i = 0;
+    while(i < s.size()) {
+        int pocetak = i;
+        int duzina = 0;
+        while(s[i] != '.')  {
+            duzina++;
+            i++;
+        }
+        i++;
+        string substr = s.substr(pocetak, duzina);
+        if(!(segmentJeValidan(substr))) {
+            cout << "Nije validan" << endl;
+            return;
+        }
+    }
+
+    cout << "Validan" << endl;
+
+}
 int main() {
     // ZADATAK 8. NIJE URADJEN
     // ZADATAK 27. NIJE RUADJEN 
+    // ZADATAK 29. NIJE RADJEN
+    // ZADATAK 32. NIJE RADJEN
 
-    zad28();
+
+    zad35();
+
     return 0;
 }
