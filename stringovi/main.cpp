@@ -647,10 +647,12 @@ void zad22() {
     
     int i = 0;
     int brojac = 0;
-    while(i < s1.size() && s1[i] == 'a') {
+    while(i < s1.size() && s1[i] == s1[i+1]) {
         brojac++;
         i++;
     }
+    brojac++;
+    i++;
 
     if(brojac != 2*n) {
         cout << "Nije" << endl;
@@ -658,10 +660,12 @@ void zad22() {
     }
 
     brojac = 0;
-    while(i < s1.size() && s1[i] == 'c') {
+    while(i < s1.size() && s1[i] == s1[i+1]) {
         brojac++;
         i++;
     }
+    brojac++;
+    i++;
 
     if (brojac != m) {
         cout << "Nije" << endl;
@@ -669,10 +673,12 @@ void zad22() {
     }
 
     brojac = 0;
-    while(i < s1.size() && s1[i] == 'b') {
+    while(i < s1.size() && s1[i] == s1[i+1]) {
         brojac++;
         i++;
     }
+    brojac++;
+    i++;
 
     if(brojac != 2*n) {
         cout << "Nije" << endl;
@@ -682,10 +688,147 @@ void zad22() {
     cout << "Jeste" << endl;
 
 }
+
+// zad 23. --- Napisati program koji sa standardnog ulaza učitava string S i transformiše dati string 
+//             tako  što  okrene  redosljed  svih  slova,  a  ostale  karaktere  zadrži  na  postojećim 
+//             pozicijama.
+
+void zad23() {
+    string s1;
+    cin >> s1;
+
+    int i = 0;
+    int j = s1.size() - 1;
+    while(i<j) {
+        if(i < s1.size() && (!(s1[i] >= 'A' && s1[i] <= 'Z') && !(s1[i] >= 'a' && s1[i] <= 'z'))) i++;
+        if(j >= 0 && (!(s1[j] >= 'A' && s1[j] <= 'Z') && !(s1[j] >= 'a' && s1[j] <= 'z'))) j--;
+
+        if(i < j) {
+            swap(s1[i],s1[j]);
+            i++; j--;
+        }
+    }
+
+    cout << s1 << endl;
+}
+
+// zad 24. ---  Napisati program koji sa standardnog ulaza učitava string S i transformiše dati string 
+//              tako što okrene redosljed svih samoglasnika, a ostale karaktere zadrži na postojećim 
+//              pozicijama.
+
+void zad24() {
+    string s1;
+    cin >> s1;
+
+    int i = 0;
+    int j = s1.size()-1;
+    while(i < j) {
+        while(i < s1.size() && !jeSamoglasnik(s1[i])) i++;
+        while(j >= 0 && !jeSamoglasnik(s1[j])) j--;
+
+        if(i<j) {
+            swap(s1[i], s1[j]);
+            i++; j--;
+        }
+    }
+
+    cout << s1 << endl;
+}
+
+// zad 25. --- Napisati program koji za data dva stringa S i T provjerava da li su jednaki kada se 
+//             otkucaju  na  tastaturi.  Karakter  ‘#’  ima  specijalno  značenje  i  predstavlja  pritisak 
+//             backspace dugmeta na tastaturi (brisanje karaktera ispred kursora). 
+
+void zad25() {
+    string s1;
+    string s2;
+
+    cin >> s1 >> s2;
+
+    string rez1 = "";
+    string rez2 = "";
+
+    for(int i = 0; i < s1.size(); i++) {
+        if (s1[i] == '#') {
+            if(rez1.empty()) continue;
+            rez1.pop_back();
+        } else {
+            rez1 += s1[i];
+        }
+    }
+
+    for(int i = 0; i < s2.size(); i++) {
+        if (s2[i] == '#') {
+            if(rez2.empty()) continue;
+            rez2.pop_back();
+        } else {
+            rez2 += s2[i];
+        }
+    }
+
+    if(rez1 == rez2) {
+        cout << "Jesu" << endl;
+    } else {
+        cout << "Nisu" << endl;
+    }
+}
+
+// zad 26. --- Napisati funkciju string cezar(string s, int k) koja šifrira Cezarovom šifrom string s koji 
+//             sadrži isključivo mala slova engleske abecede. Cezarovo šifriranje se vrši tako što se 
+//             svako slovo ciklično pomjeri za k mjesta udesno po abecedi. 
+
+void zad26() {
+    string s;
+    int k;
+    cin >> s >> k;
+
+    for(int i = 0; i < s.size(); i++) {
+        s[i] = (s[i]-97+k)%26 + 97;
+    }
+
+    cout << s << endl;
+}
+
+// zad 28. ---  Napisati program koji sa standardnog ulaza učitava string genom koji se sastoji od 
+//              velikih slova ’A’, ’C’, ’G’, ’T’ (skraćenice za 4 nukleotidne baze adenin, citozin, guanin 
+//              i timin) i broj k. Vaš program treba da pronađe i odštampa sve podstringove stringa 
+//              genom dužine k koji sadrže sva četiri slova. Ne štampati duplikate. 
+
+bool validan(string &s) {
+    int niz[4] = {0};
+    for(int i = 0; i < s.size(); i++) {
+        niz[s[i]-65] = 1;
+    }
+
+    for(int i = 0; i < 4; i++) {
+        if (niz[i] == 0) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void zad28() {
+    string s;
+    int k;
+    cin >> s >> k;
+
+    for(int i = 4; i <= s.size(); i++) {
+        for(int j = 0; j < s.size() - i + 1; j++) {
+            int niz[4] = {0};
+            string substr;
+            substr = s.substr(j,i);
+
+            if(validan(substr)) cout << substr << endl;
+        }
+    }
+}
+
 int main() {
     // ZADATAK 8. NIJE URADJEN
-    // ZADATAK 22. NIJE DOBAR
-    
-    zad22();
+    // ZADATAK 27. NIJE RUADJEN 
+
+    zad28();
     return 0;
 }
